@@ -13,7 +13,7 @@ namespace Turn.Data
         {
         }
 
-        public DbSet<Ticket> Turns { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

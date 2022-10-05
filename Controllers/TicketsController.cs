@@ -22,7 +22,7 @@ namespace Turn.Controllers
         // GET: Tickets
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Turns.ToListAsync());
+            return View(await _context.Tickets.ToListAsync());
         }
 
         // GET: Tickets/Details/5
@@ -33,7 +33,7 @@ namespace Turn.Controllers
                 return NotFound();
             }
 
-            var ticket = await _context.Turns
+            var ticket = await _context.Tickets
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ticket == null)
             {
@@ -41,6 +41,84 @@ namespace Turn.Controllers
             }
 
             return View(ticket);
+        }
+
+        // GET: Tickets/Kiosk
+        public IActionResult Kiosk()
+        {
+            return View();
+        }
+
+        // POST: Tickets/Caja
+        public async Task<IActionResult> CashDesk()
+        {
+            var ST = "CA";
+            var ticket = await _context.Tickets.OrderByDescending(x => x.Id).FirstOrDefaultAsync(m => m.ServicesType == ST);
+            if (ticket == null)
+            {
+                var SN = 1;
+                var datenow = DateTime.Now;
+                _context.Tickets.Add(new Ticket { ServicesType = "CA", ShiftNumber = SN, ExpeditionDate = datenow });
+            }
+            else
+            {
+                var SN = ticket.ShiftNumber + 1;
+                var datenow = DateTime.Now;
+                _context.Tickets.Add(new Ticket { ServicesType = "CA", ShiftNumber = SN, ExpeditionDate = datenow });
+            }
+
+
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Kiosk));
+        }
+
+        // POST: Tickets/Stand
+        public async Task<IActionResult> Stand()
+        {
+            var ST = "CI";
+            var ticket = await _context.Tickets.OrderByDescending(x => x.Id).FirstOrDefaultAsync(m => m.ServicesType == ST);
+            if (ticket == null)
+            {
+                var SN = 1;
+                var datenow = DateTime.Now;
+                _context.Tickets.Add(new Ticket { ServicesType = "CI", ShiftNumber = SN, ExpeditionDate = datenow });
+            }
+            else
+            {
+                var SN = ticket.ShiftNumber + 1;
+                var datenow = DateTime.Now;
+                _context.Tickets.Add(new Ticket { ServicesType = "CI", ShiftNumber = SN, ExpeditionDate = datenow });
+            }
+
+
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Kiosk));
+        }
+
+        // POST: Tickets/Results
+        public async Task<IActionResult> Results()
+        {
+            var ST = "ER";
+            var ticket = await _context.Tickets.OrderByDescending(x => x.Id).FirstOrDefaultAsync(m => m.ServicesType == ST);
+            if (ticket == null)
+            {
+                var SN = 1;
+                var datenow = DateTime.Now;
+                _context.Tickets.Add(new Ticket { ServicesType = "ER", ShiftNumber = SN, ExpeditionDate = datenow });
+            }
+            else
+            {
+                var SN = ticket.ShiftNumber + 1;
+                var datenow = DateTime.Now;
+                _context.Tickets.Add(new Ticket { ServicesType = "ER", ShiftNumber = SN, ExpeditionDate = datenow });
+            }
+
+
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Kiosk));
         }
 
         // GET: Tickets/Create
@@ -73,7 +151,7 @@ namespace Turn.Controllers
                 return NotFound();
             }
 
-            var ticket = await _context.Turns.FindAsync(id);
+            var ticket = await _context.Tickets.FindAsync(id);
             if (ticket == null)
             {
                 return NotFound();
@@ -124,7 +202,7 @@ namespace Turn.Controllers
                 return NotFound();
             }
 
-            var ticket = await _context.Turns
+            var ticket = await _context.Tickets
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ticket == null)
             {
@@ -139,15 +217,15 @@ namespace Turn.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ticket = await _context.Turns.FindAsync(id);
-            _context.Turns.Remove(ticket);
+            var ticket = await _context.Tickets.FindAsync(id);
+            _context.Tickets.Remove(ticket);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TicketExists(int id)
         {
-            return _context.Turns.Any(e => e.Id == id);
+            return _context.Tickets.Any(e => e.Id == id);
         }
     }
 }
