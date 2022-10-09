@@ -1,0 +1,22 @@
+﻿@model Turn.Data.Entities.Ticket
+
+@{
+    ViewData["Title"] = "Monitor";
+}
+
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-6">
+            <h1>Turno</h1>
+            <h1>@Html.DisplayFor(model => model.ServicesType)-@Html.DisplayFor(model => model.ShiftNumber) </h1>
+            <h2>Ventanilla</h2>
+            <h2>@Html.DisplayFor(model => model.Stand)</h2>
+            <a>@Html.DisplayFor(model => model.AttentionDate)</a>
+        </dt>       
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

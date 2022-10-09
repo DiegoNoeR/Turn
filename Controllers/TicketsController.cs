@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Turn.Data;
 using Turn.Data.Entities;
 
@@ -33,7 +31,7 @@ namespace Turn.Controllers
                 return NotFound();
             }
 
-            var ticket = await _context.Tickets
+            Ticket ticket = await _context.Tickets
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ticket == null)
             {
@@ -41,6 +39,182 @@ namespace Turn.Controllers
             }
 
             return View(ticket);
+        }
+
+        //GET: Tickets/DisplayUnit
+        public async Task<IActionResult> DisplayUnit()
+        {
+            Ticket ticket = await _context.Tickets
+                .OrderByDescending(x => x.AttentionDate)
+                .FirstOrDefaultAsync(m => m.ServicesType != null);
+            return View(ticket);
+        }
+
+        // GET: Tickets/Module
+        public IActionResult Module()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> CashDesk1()
+        {
+            string ST = "CA";
+            Ticket ticket = await _context.Tickets.FirstOrDefaultAsync(m => m.ServicesType == ST && m.Stand == null);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                ticket.Stand = "C 1";
+                ticket.AttentionDate = DateTime.Now;
+                _context.Tickets.Update(ticket);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Module));
+        }
+        public async Task<IActionResult> CashDesk2()
+        {
+            string ST = "CA";
+            Ticket ticket = await _context.Tickets.FirstOrDefaultAsync(m => m.ServicesType == ST && m.Stand == null);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                ticket.Stand = "C 2";
+                ticket.AttentionDate = DateTime.Now;
+                _context.Tickets.Update(ticket);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Module));
+        }
+
+        public async Task<IActionResult> CashDesk3()
+        {
+            string ST = "CA";
+            Ticket ticket = await _context.Tickets.FirstOrDefaultAsync(m => m.ServicesType == ST && m.Stand == null);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                ticket.Stand = "C 3";
+                ticket.AttentionDate = DateTime.Now;
+                _context.Tickets.Update(ticket);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Module));
+        }
+
+        public async Task<IActionResult> CashDesk4()
+        {
+            string ST = "CA";
+            Ticket ticket = await _context.Tickets.FirstOrDefaultAsync(m => m.ServicesType == ST && m.Stand == null);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                ticket.Stand = "C 4";
+                ticket.AttentionDate = DateTime.Now;
+                _context.Tickets.Update(ticket);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Module));
+        }
+
+        public async Task<IActionResult> CashDesk5()
+        {
+            string ST = "CA";
+            Ticket ticket = await _context.Tickets.FirstOrDefaultAsync(m => m.ServicesType == ST && m.Stand == null);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                ticket.Stand = "C 5";
+                ticket.AttentionDate = DateTime.Now;
+                _context.Tickets.Update(ticket);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Module));
+        }
+
+        public async Task<IActionResult> CashDesk6()
+        {
+            string ST = "CA";
+            Ticket ticket = await _context.Tickets.FirstOrDefaultAsync(m => m.ServicesType == ST && m.Stand == null);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                ticket.Stand = "C 6";
+                ticket.AttentionDate = DateTime.Now;
+                _context.Tickets.Update(ticket);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Module));
+        }
+
+        public async Task<IActionResult> Stand1()
+        {
+            string ST = "CI";
+            Ticket ticket = await _context.Tickets.FirstOrDefaultAsync(m => m.ServicesType == ST && m.Stand == null);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                ticket.Stand = "V 1";
+                ticket.AttentionDate = DateTime.Now;
+                _context.Tickets.Update(ticket);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Module));
+        }
+
+        public async Task<IActionResult> Stand2()
+        {
+            string ST = "CI";
+            Ticket ticket = await _context.Tickets.FirstOrDefaultAsync(m => m.ServicesType == ST && m.Stand == null);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                ticket.Stand = "V 2";
+                ticket.AttentionDate = DateTime.Now;
+                _context.Tickets.Update(ticket);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Module));
+        }
+
+        public async Task<IActionResult> Results1()
+        {
+            string ST = "ER";
+            Ticket ticket = await _context.Tickets.FirstOrDefaultAsync(m => m.ServicesType == ST && m.Stand == null);
+            if (ticket == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                ticket.Stand = "E 1";
+                ticket.AttentionDate = DateTime.Now;
+                _context.Tickets.Update(ticket);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Module));
         }
 
         // GET: Tickets/Kiosk
@@ -52,18 +226,18 @@ namespace Turn.Controllers
         // POST: Tickets/Caja
         public async Task<IActionResult> CashDesk()
         {
-            var ST = "CA";
-            var ticket = await _context.Tickets.OrderByDescending(x => x.Id).FirstOrDefaultAsync(m => m.ServicesType == ST);
+            string ST = "CA";
+            Ticket ticket = await _context.Tickets.OrderByDescending(x => x.Id).FirstOrDefaultAsync(m => m.ServicesType == ST);
             if (ticket == null)
             {
-                var SN = 1;
-                var datenow = DateTime.Now;
+                int SN = 1;
+                DateTime datenow = DateTime.Now;
                 _context.Tickets.Add(new Ticket { ServicesType = "CA", ShiftNumber = SN, ExpeditionDate = datenow });
             }
             else
             {
-                var SN = ticket.ShiftNumber + 1;
-                var datenow = DateTime.Now;
+                int SN = ticket.ShiftNumber + 1;
+                DateTime datenow = DateTime.Now;
                 _context.Tickets.Add(new Ticket { ServicesType = "CA", ShiftNumber = SN, ExpeditionDate = datenow });
             }
 
@@ -76,18 +250,18 @@ namespace Turn.Controllers
         // POST: Tickets/Stand
         public async Task<IActionResult> Stand()
         {
-            var ST = "CI";
-            var ticket = await _context.Tickets.OrderByDescending(x => x.Id).FirstOrDefaultAsync(m => m.ServicesType == ST);
+            string ST = "CI";
+            Ticket ticket = await _context.Tickets.OrderByDescending(x => x.Id).FirstOrDefaultAsync(m => m.ServicesType == ST);
             if (ticket == null)
             {
-                var SN = 1;
-                var datenow = DateTime.Now;
+                int SN = 1;
+                DateTime datenow = DateTime.Now;
                 _context.Tickets.Add(new Ticket { ServicesType = "CI", ShiftNumber = SN, ExpeditionDate = datenow });
             }
             else
             {
-                var SN = ticket.ShiftNumber + 1;
-                var datenow = DateTime.Now;
+                int SN = ticket.ShiftNumber + 1;
+                DateTime datenow = DateTime.Now;
                 _context.Tickets.Add(new Ticket { ServicesType = "CI", ShiftNumber = SN, ExpeditionDate = datenow });
             }
 
@@ -100,18 +274,18 @@ namespace Turn.Controllers
         // POST: Tickets/Results
         public async Task<IActionResult> Results()
         {
-            var ST = "ER";
-            var ticket = await _context.Tickets.OrderByDescending(x => x.Id).FirstOrDefaultAsync(m => m.ServicesType == ST);
+            string ST = "ER";
+            Ticket ticket = await _context.Tickets.OrderByDescending(x => x.Id).FirstOrDefaultAsync(m => m.ServicesType == ST);
             if (ticket == null)
             {
-                var SN = 1;
-                var datenow = DateTime.Now;
+                int SN = 1;
+                DateTime datenow = DateTime.Now;
                 _context.Tickets.Add(new Ticket { ServicesType = "ER", ShiftNumber = SN, ExpeditionDate = datenow });
             }
             else
             {
-                var SN = ticket.ShiftNumber + 1;
-                var datenow = DateTime.Now;
+                int SN = ticket.ShiftNumber + 1;
+                DateTime datenow = DateTime.Now;
                 _context.Tickets.Add(new Ticket { ServicesType = "ER", ShiftNumber = SN, ExpeditionDate = datenow });
             }
 
@@ -151,7 +325,7 @@ namespace Turn.Controllers
                 return NotFound();
             }
 
-            var ticket = await _context.Tickets.FindAsync(id);
+            Ticket ticket = await _context.Tickets.FindAsync(id);
             if (ticket == null)
             {
                 return NotFound();
@@ -202,7 +376,7 @@ namespace Turn.Controllers
                 return NotFound();
             }
 
-            var ticket = await _context.Tickets
+            Ticket ticket = await _context.Tickets
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (ticket == null)
             {
@@ -217,7 +391,7 @@ namespace Turn.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ticket = await _context.Tickets.FindAsync(id);
+            Ticket ticket = await _context.Tickets.FindAsync(id);
             _context.Tickets.Remove(ticket);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
